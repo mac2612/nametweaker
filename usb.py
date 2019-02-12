@@ -24,8 +24,8 @@ class client(object):
         self.debug = debug
         self._timeout = 10
         self._vendor_name = 'leapfrog'
-        self._sg_raw = '/bin/sg_raw' if sys.platform == 'win32' else 'sg_raw'
-        self._sg_scan = '/bin/sg_scan' if sys.platform == 'win32' else 'sg_scan'
+        self._sg_raw = 'bin/sg_raw.exe' if sys.platform == 'win32' else 'sg_raw'
+        self._sg_scan = 'bin/sg_scan.exe' if sys.platform == 'win32' else 'sg_scan'
         self._device_id = device_id if device_id else self.find_device_id()
 
     def error(self, e):
@@ -168,7 +168,9 @@ class client(object):
 
             while timeout:
                 if sys.platform == 'win32':
-                    lines = self.sg_scan().split('\n')
+                    p = Popen(self._sg_scan, stdout=PIPE)
+                    out, _ = p.communicate(self._timeout)
+                    lines = [x.decode('utf-8') for x in out.split(b'\n')]
                     if lines:
                         for line in lines:
                             if self._vendor_name in line.lower():
@@ -176,7 +178,6 @@ class client(object):
                                     _device_id = '%s' % line.split(' ')[0]
                                 else:
                                     _device_id = '%s' % lines[lines.index(line) -1].split(' ')[0].replace(':', '')
-                
                                 return _device_id
 
                 else:
