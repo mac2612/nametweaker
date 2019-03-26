@@ -22,9 +22,9 @@ class Rom(object):
   def get_name_string(self):
     return self._get_lfstring(self.rom, self._get_table_addr(PTR_BASE+OFFSET_NAME)).decode("utf-8")
   def set_name_details(self, namestr, namesound):
-    nameaddr = self._get_table_addr(PTR_BASE+OFFSET_NAME) 
-    namebytes = namestr + b'\x00' + namesound
-    self.rom = self.rom[:nameaddr] + namebytes + self.rom[nameaddr+len(namebytes):]
+    nameaddr = self._get_table_addr(PTR_BASE+OFFSET_NAME)
+    payload = namestr + b'\x00' + b'\x01\x00\xcf\x02' + namesound + b'\x11'
+    self.rom = self.rom[:nameaddr] + payload + self.rom[nameaddr+len(payload):]
   def get_message1_string(self):
     return self._get_lfstring(self.rom, self._get_table_addr(PTR_BASE+OFFSET_MSG1)).decode("utf-8")
 
