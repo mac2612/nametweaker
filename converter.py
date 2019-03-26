@@ -30,7 +30,7 @@ def convert_to_adpcm(wav_file, bitrate, algo='ADPCM66'):
   conv.wait()
   return wav_file + '.adp'
 
-def convert_audiofile(input_file, bitrate=8000):
+def convert_audiofile(input_file, bitrate=9000):
   sound = AudioSegment.from_file(input_file)
   sound = sound.set_frame_rate(bitrate)
   sound.export('tmp.wav', format="wav")
