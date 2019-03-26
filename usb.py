@@ -24,8 +24,8 @@ class client(object):
         self.debug = debug
         self._timeout = 10
         self._vendor_name = 'leapfrog'
-        self._sg_raw = 'bin/sg_raw.exe' if sys.platform == 'win32' else 'sg_raw'
-        self._sg_scan = 'bin/sg_scan.exe' if sys.platform == 'win32' else 'sg_scan'
+        self._sg_raw = 'bin/sg_raw.exe' if sys.platform == 'win32' else 'sudo sg_raw'
+        self._sg_scan = 'bin/sg_scan.exe' if sys.platform == 'win32' else 'sudo sg_scan'
         self._device_id = device_id if device_id else self.find_device_id()
 
     def error(self, e):
