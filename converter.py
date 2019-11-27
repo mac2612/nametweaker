@@ -23,7 +23,7 @@ def download_converter():
 def convert_to_adpcm(wav_file, bitrate, algo='ADPCM66'):
   cmd = "AudioBatchConverter.exe -e {} -b {} -h No -o . {}".format(algo, bitrate, wav_file)
   # On non-windows system, use wine. You'll need to install wine for this.
-  if os != 'nt':
+  if os.name != 'nt':
     cmd = "wine " + cmd
   print("cmd = " + cmd)
   conv = subprocess.Popen(cmd, shell=True)

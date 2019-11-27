@@ -19,7 +19,7 @@ def main(argv):
   usbclient = usb.client()
   print("Backing up ROM...")
   myrom = rom.Rom(usbclient.dump())
-  bakfile = "backup-{}.rom".format(str(datetime.datetime.now()))
+  bakfile = "backup-{}.rom".format(datetime.datetime.now().strftime('%Y-%m-%d-%H-%M-%S'))
   with open(bakfile, 'wb') as f:
     f.write(myrom.rom)
     print("Wrote current ROM to file {}".format(bakfile))
